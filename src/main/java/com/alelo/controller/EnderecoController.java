@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("consultaCep")
 public class EnderecoController {
@@ -18,7 +20,8 @@ public class EnderecoController {
 		SpringApplication.run(EnderecoController.class,
 				args);
 	}
-
+	
+	@ApiOperation(value = "Consulta endereco pelo CEP")
 	@GetMapping("/{cep}")
 	public ResponseEntity<String> consultaCep(@PathVariable(value = "cep") String cep) {
 		restTemplate = new RestTemplate();

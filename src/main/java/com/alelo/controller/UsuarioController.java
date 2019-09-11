@@ -23,22 +23,27 @@ import com.alelo.model.Endereco;
 import com.alelo.model.Usuario;
 import com.alelo.repository.UsuarioRepository;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("api/v1/usuario")
 public class UsuarioController {
 	@Resource
 	private UsuarioRepository usuarioRepository;
-
+	
+	@ApiOperation(value = "Retorna todos os usuarios")
 	@GetMapping
 	public List<Usuario> index() {
 		return usuarioRepository.findAll();
 	}
-
+	
+	@ApiOperation(value = "Consulta usuario pelo id")
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> show(@PathVariable(value = "id") Integer usuarioId) throws RecursoNaoEncontradoException {
 		return ResponseEntity.ok().body(usuarioExistente(usuarioId));
 	}
-
+	
+	@ApiOperation(value = "Cria um usuario e preenche o endereco pelo CEP")
 	@PostMapping
 	public Usuario post(@Valid @RequestBody Usuario usuario) {
 		String cep = usuario.getEndereco().getCep();
@@ -46,7 +51,8 @@ public class UsuarioController {
 		usuario.setEndereco(enderecoTemplate);
 		return usuarioRepository.save(usuario);
 	}
-
+	
+	@ApiOperation(value = "Atualiza um usuario")
 	@PutMapping("/{id}")
 	public ResponseEntity<Usuario> put(@PathVariable(value = "id") Integer usuarioId,
 			@Valid @RequestBody Usuario usuarioModificado) throws RecursoNaoEncontradoException {
@@ -55,7 +61,8 @@ public class UsuarioController {
 		usuario.setEmail(usuarioModificado.getEmail());
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
-
+	
+	@ApiOperation(value = "Remove um usuario")
 	@DeleteMapping("/{id}")
 	public Map<String, String> delete(@PathVariable(value = "id") Integer usuarioId) throws Exception {
 		Usuario usuario = usuarioExistente(usuarioId);
