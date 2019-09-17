@@ -1,6 +1,5 @@
 package com.alelo.controller;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +15,6 @@ public class EnderecoController {
 
 	RestTemplate restTemplate;
 
-	public static void main(String[] args) {
-		SpringApplication.run(EnderecoController.class,
-				args);
-	}
-	
 	@ApiOperation(value = "Consulta endereco pelo CEP")
 	@GetMapping("/{cep}")
 	public ResponseEntity<String> consultaCep(@PathVariable(value = "cep") String cep) {
